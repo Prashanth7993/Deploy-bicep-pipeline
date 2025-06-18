@@ -1,0 +1,45 @@
+{{- range .Values.images }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}
+  namespace: {{ .namespace }}
+  labels:
+    app: {{ .name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}
+    spec:
+      containers:
+        - name: {{ .name }}
+          image: {{ .image }}
+          ports:
+            - containerPort: {{ .port }}
+          {{- if and (ne .name "api-gateway") (ne .name "service-registry") }}
+          env:
+            {{- range .env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+          {{- end }}
+
+          {{- if eq .name "postgres" }}
+          volumeMounts:
+            - name: initdb
+              mountPath: /docker-entrypoint-initdb.d/init.sql
+              subPath: init.sql
+          {{- end }}
+      {{- if eq .name "postgres" }}
+      volumes:
+        - name: initdb
+          configMap:
+            name: postgres-initdb
+      {{- end }}
+---
+{{- end }}

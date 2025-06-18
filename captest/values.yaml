@@ -1,0 +1,116 @@
+appVersion: "latest-v2"
+images:
+  - name: api-gateway
+    image: prashanth7993/captest-api-gateway:1.2.1
+    port: 9000
+
+  - name: authentication-service
+    image: prashanth7993/captest-authentication-service:1.2.1
+    port: 9089
+    database: authentication_db
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://postgres:5432/authentication_db
+      - name: SPRING_DATASOURCE_USERNAME
+        value: myuser
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: mypassword
+
+  - name: bus-service
+    image: prashanth7993/captest-bus-service:1.2.1
+    port: 9095
+    database: bus_db
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://postgres:5432/bus_db
+      - name: SPRING_DATASOURCE_USERNAME
+        value: myuser
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: mypassword
+
+  - name: carpool-service
+    image: prashanth7993/captest-carpool-service:1.2.1
+    port: 9096
+    database: carpool_db
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://postgres:5432/carpool_db
+      - name: SPRING_DATASOURCE_USERNAME
+        value: myuser
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: mypassword
+
+  - name: feedback-service
+    image: prashanth7993/captest-feedback-service:1.2.1
+    port: 9099
+    database: feedback_db
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://postgres:5432/feedback_db
+      - name: SPRING_DATASOURCE_USERNAME
+        value: myuser
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: mypassword
+
+  - name: notification-service
+    image: prashanth7993/captest-notification-service:1.2.1
+    port: 9092
+    database: notification_db
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://postgres:5432/notification_db
+      - name: SPRING_DATASOURCE_USERNAME
+        value: myuser
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: mypassword
+
+  - name: payment-service
+    image: prashanth7993/captest-payment-service:1.2.1
+    port: 9696
+    database: payment_db
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://postgres:5432/payment_db
+      - name: SPRING_DATASOURCE_USERNAME
+        value: myuser
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: mypassword
+
+  - name: route-service
+    image: prashanth7993/captest-route-service:1.2.1
+    port: 9097
+    database: route_db
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://postgres:5432/route_db
+      - name: SPRING_DATASOURCE_USERNAME
+        value: myuser
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: mypassword
+
+  - name: service-registry
+    image: prashanth7993/captest-service-registry:1.2.1
+    port: 8761
+
+  - name: user-service
+    image: prashanth7993/captest-user-service:1.2.1
+    port: 9098
+    database: user_db
+    env:
+      - name: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://postgres:5432/user_db
+      - name: SPRING_DATASOURCE_USERNAME
+        value: myuser
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: mypassword
+
+initdbScript: |
+  CREATE DATABASE authentication_db;
+  CREATE DATABASE bus_db;
+  CREATE DATABASE carpool_db;
+  CREATE DATABASE feedback_db;
+  CREATE DATABASE notification_db;
+  CREATE DATABASE payment_db;
+  CREATE DATABASE route_db;
+  CREATE DATABASE user_db;
+
